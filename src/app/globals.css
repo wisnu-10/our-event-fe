@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  --color-tinta: #25224c;
+  --color-tinta-soft: #55517e;
+  --color-tinta-faint: #8b88ad;
+  --color-panggung: #5b3df5;
+  --color-panggung-deep: #4628c9;
+  --color-panggung-tint: #ece8fe;
+  --color-lampion: #ffb020;
+  --color-lampion-soft: #fff3d9;
+  --color-kertas: #f5f4fa;
+  --color-kartu: #ffffff;
+  --color-garis: #e4e2f1;
+  --color-daun: #0e9f6e;
+  --color-daun-soft: #ddf5e9;
+  --color-bara: #dc2626;
+  --color-bara-soft: #fde4e2;
+  --color-langit: #2563eb;
+  --color-langit-soft: #dfeaff;
+  --color-beludru: #1d1939;
+  --color-beludru-soft: #2c2757;
+
+  --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-lampion);
+  color: var(--color-tinta);
+}
+
+/* Fokus keyboard yang selalu terlihat */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-panggung);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Kolom input standar: satu tampilan untuk input/select/textarea */
+.field {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-garis);
+  background: var(--color-kartu);
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--color-tinta);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field::placeholder {
+  color: var(--color-tinta-faint);
+}
+
+.field:focus {
+  border-color: var(--color-panggung);
+  box-shadow: 0 0 0 3px var(--color-panggung-tint);
+}
+
+.field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Tepi perforasi karcis — elemen signature */
+.perforasi-x {
+  --lubang: var(--color-kertas);
+  height: 2px;
+  background-image: radial-gradient(circle at 5px 50%, var(--lubang) 4px, transparent 4.5px);
+  background-size: 14px 100%;
+  background-repeat: repeat-x;
+}
+
+.perforasi-x-gelap {
+  --lubang: var(--color-beludru);
+  height: 2px;
+  background-image: radial-gradient(circle at 5px 50%, var(--lubang) 4px, transparent 4.5px);
+  background-size: 14px 100%;
+  background-repeat: repeat-x;
+}
+
+/* Kilau skeleton saat memuat */
+@keyframes kilau {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton {
+  border-radius: 0.75rem;
+  background: linear-gradient(90deg, var(--color-garis) 25%, #f1f0f7 50%, var(--color-garis) 75%);
+  background-size: 800px 100%;
+  animation: kilau 1.4s ease infinite;
+}
+
+/* Muncul berjenjang di grid beranda */
+@keyframes naik {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.muncul {
+  animation: naik 0.5s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .muncul,
+  .skeleton {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
